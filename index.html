@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing + Flow Intake Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #6E1F24;
+    --crimson-light: #9C6A6A;
+    --crimson-bg: #f9f2f2;
+    --olive: #5A5A2F;
+    --olive-mid: #9C6A2A;
+    --gold: #A06A2A;
+    --gold-light: #f5ead8;
+    --mauve: #9C6A6A;
+    --mauve-light: #f5eaea;
+    --cream: #F4F3F3;
+    --cream-dark: #ede9e6;
+    --text-dark: #2a2220;
+    --text-mid: #5c4a42;
+    --text-light: #8a7068;
+    --border: #ddd4cc;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  #app {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .logo-bar {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .logo-bar h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 0.25rem;
+  }
+
+  .logo-bar p {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text-mid);
+  }
+
+  .disclaimer {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--olive);
+    font-style: italic;
+  }
+
+  .how-to {
+    margin-bottom: 2.5rem;
+  }
+
+  .how-to h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--crimson);
+    margin-bottom: 1rem;
+  }
+
+  .how-to p { color: var(--text-mid); margin-bottom: 0.75rem; font-size: 14px; }
+
+  .how-to strong { color: var(--text-dark); font-weight: 600; }
+
+  .tagline {
+    background: var(--mauve-light);
+    border-left: 3px solid var(--mauve);
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--crimson);
+    font-style: italic;
+  }
+
+  .scoring-guide {
+    margin-bottom: 2.5rem;
+  }
+
+  .scoring-guide h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    margin-bottom: 0.75rem;
+  }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .score-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .score-badge.zero { background: var(--cream-dark); color: var(--text-mid); }
+  .score-badge.one { background: var(--gold-light); color: var(--olive); }
+  .score-badge.two { background: var(--crimson); color: white; }
+
+  .score-row span { font-size: 14px; color: var(--text-mid); }
+
+  .part-header {
+    background: var(--crimson);
+    color: white;
+    padding: 1.5rem 1.75rem;
+    border-radius: 8px;
+    margin: 2.5rem 0 2rem;
+  }
+
+  .part-header .part-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0.4rem;
+  }
+
+  .part-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .part-header p {
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  .section-block {
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--cream-dark);
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header .section-num {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+  }
+
+  .section-header h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--crimson);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-header p {
+    font-size: 13px;
+    color: var(--text-mid);
+  }
+
+  .question-row {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--cream-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .question-row:last-child { border-bottom: none; }
+
+  .question-text {
+    font-size: 14px;
+    color: var(--text-dark);
+    line-height: 1.55;
+  }
+
+  .question-note {
+    font-size: 12px;
+    color: var(--text-light);
+    font-style: italic;
+    margin-top: 0.25rem;
+  }
+
+  .score-options {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .score-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: white;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-mid);
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-btn:hover { border-color: var(--crimson); color: var(--crimson); }
+
+  .score-btn.selected-0 { background: var(--cream-dark); border-color: var(--text-light); color: var(--text-dark); }
+  .score-btn.selected-1 { background: var(--gold-light); border-color: var(--gold); color: var(--olive); }
+  .score-btn.selected-2 { background: var(--crimson); border-color: var(--crimson); color: white; }
+
+  .section-total {
+    background: var(--cream-dark);
+    padding: 0.75rem 1.5rem;
+    text-align: right;
+    font-size: 13px;
+    color: var(--text-mid);
+    border-top: 1px solid var(--border);
+  }
+
+  .section-total span {
+    font-weight: 600;
+    color: var(--crimson);
+    font-size: 15px;
+  }
+
+  .identity-block {
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .identity-note {
+    background: var(--olive);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.9;
+  }
+
+  .checkbox-group {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-mid);
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .checkbox-label:last-child { border-bottom: none; }
+
+  .checkbox-label input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: var(--crimson);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .open-field {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .open-field label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .open-field textarea {
+    width: 100%;
+    min-height: 80px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: var(--text-dark);
+    background: white;
+    resize: vertical;
+  }
+
+  .submit-area {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .submit-btn {
+    background: var(--crimson);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .submit-btn:hover { background: #5a1820; }
+
+  .submit-note {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+
+  /* RESULTS SECTION */
+  #results { display: none; }
+
+  .results-header {
+    text-align: center;
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .results-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--crimson);
+    margin-bottom: 0.5rem;
+  }
+
+  .results-header p {
+    font-size: 14px;
+    color: var(--text-mid);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .results-part {
+    margin-bottom: 2.5rem;
+  }
+
+  .results-part h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 1.25rem;
+  }
+
+  .result-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .result-row:last-child { border-bottom: none; }
+
+  .result-label {
+    width: 180px;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+
+  .result-bar-wrap {
+    flex: 1;
+    height: 10px;
+    background: var(--cream-dark);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .result-bar {
+    height: 100%;
+    background: var(--crimson);
+    border-radius: 5px;
+    transition: width 1s ease;
+  }
+
+  .result-bar.high { background: var(--crimson); }
+  .result-bar.mid { background: var(--gold); }
+  .result-bar.low { background: var(--border); }
+
+  .result-score {
+    width: 60px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-mid);
+  }
+
+  .loudest-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--crimson);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .routing-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .routing-card.top {
+    border-color: var(--crimson);
+  }
+
+  .routing-card-header {
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--cream-dark);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .routing-card.top .routing-card-header {
+    background: var(--crimson-bg);
+    border-bottom-color: var(--crimson);
+  }
+
+  .routing-card-header h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .routing-card.top .routing-card-header h4 { color: var(--crimson); }
+
+  .routing-card-body {
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .restart-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    background: transparent;
+    border: 1.5px solid var(--crimson);
+    color: var(--crimson);
+    padding: 0.75rem 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .restart-btn:hover { background: var(--crimson); color: white; }
+
+  .closing-note {
+    background: var(--olive);
+    color: white;
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 2rem;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .closing-note p + p { margin-top: 0.75rem; }
+
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 2rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .result-label { width: 130px; font-size: 12px; }
+    .score-options { flex-wrap: wrap; }
+    .part-header h2 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- QUIZ SECTION -->
+  <div id="quiz">
+
+    <div class="logo-bar">
+      <h1>Joria Integrative Healing</h1>
+      <p>Healing + Flow Intake Assessment</p>
+    </div>
+
+    <div class="disclaimer">
+      This assessment is for educational purposes only. It is not a medical diagnosis and is not a substitute for care from a licensed provider. Use it as an invitation to get curious about your body, not as a verdict on your health.
+    </div>
+
+    <div class="how-to">
+      <h2>How to use this assessment</h2>
+      <p>This assessment has two parts, and together they personalize both phases of your Joria experience.</p>
+      <p><strong>Part 1: Healing Foundations</strong> helps you identify which lifestyle domains are asking for the most attention right now. Your results will guide where you start in Phase 1.</p>
+      <p><strong>Part 2: Body Systems</strong> helps you identify which of your upstream physiological systems are sending the loudest signals. Your results will guide which modules to pay closest attention to as you move through Phase 2: The Flow.</p>
+      <div class="tagline">You don't need to do everything at once. These results are an invitation, not a to-do list. Start where it feels most accessible, most exciting, or most urgent. Small, consistent shifts create lasting impact.</div>
+    </div>
+
+    <div class="scoring-guide">
+      <h3>Scoring guide</h3>
+      <div class="score-row">
+        <div class="score-badge zero">0</div>
+        <span>Never or rarely</span>
+      </div>
+      <div class="score-row">
+        <div class="score-badge one">1</div>
+        <span>Sometimes</span>
+      </div>
+      <div class="score-row">
+        <div class="score-badge two">2</div>
+        <span>Often or consistently</span>
+      </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-header">
+      <div class="part-label">Part 1</div>
+      <h2>Healing Foundations</h2>
+      <p>Where does your body most need support right now?</p>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section-block" data-section="s1">
+      <div class="section-header">
+        <div class="section-num">Section 1</div>
+        <h3>Nutrition + Gut Health</h3>
+        <p>Your digestive system is the foundation beneath the foundation. What you eat matters, and so does whether your body can actually absorb and use it.</p>
+      </div>
+
+      <div class="question-row" data-q="s1_q1" data-max="2">
+        <div class="question-text">I eat irregularly or often skip meals</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q2" data-max="2">
+        <div class="question-text">I feel bloated, gassy, or uncomfortably full after eating</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q3" data-max="2">
+        <div class="question-text">I experience constipation: infrequent, difficult, or incomplete bowel movements</div>
+        <div class="question-note">Fewer than once daily or needing to strain may be a sign of slow motility, thyroid function, or inadequate fiber and hydration.</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q4" data-max="2">
+        <div class="question-text">I experience loose stools, diarrhea, or urgency, or my bowel patterns are unpredictable</div>
+        <div class="question-note">Loose or urgent stools can reflect gut inflammation, dysbiosis, food sensitivities, or a stressed nervous system.</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q5" data-max="2">
+        <div class="question-text">I have food sensitivities or reactions I haven't fully identified</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q6" data-max="2">
+        <div class="question-text">I feel tired or foggy after meals</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q7" data-max="2">
+        <div class="question-text">I have a complicated or stressful relationship with food</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q8" data-max="2">
+        <div class="question-text">I rarely eat fermented foods, fiber-rich vegetables, or diverse whole foods</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="question-row" data-q="s1_q9" data-max="2">
+        <div class="question-text">I experience nausea, acid reflux, or stomach discomfort regularly</div>
+        <div class="score-options">
+          <button class="score-btn" data-val="0">0</button>
+          <button class="score-btn" data-val="1">1</button>
+          <button class="score-btn" data-val="2">2</button>
+        </div>
+      </div>
+      <div class="section-total">Section score: <span id="s1-total">0</span> / 18</div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section-block" data-section="s2">
+      <div class="section-header">
+        <div class="section-num">Section 2</div>
+        <h3>Environmental Impacts</h3>
+        <p>We live in bodies shaped by our environments. Endocrine-disrupting chemicals, air quality, water, and the products we use daily all influence hormonal health.</p>
+      </div>
+      <div class="question-row" data-q="s2_q1" data-max="2">
+        <div class="question-text">I regularly use conventional cleaning products, air fresheners, or scented candles indoors</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s2_q2" data-max="2">
+        <div class="question-text">I use conventional personal care products (lotions, shampoos, deodorants, makeup) without checking ingredients</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s2_q3" data-max="2">
+        <div class="question-text">I drink unfiltered tap water or use plastic bottles regularly</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s2_q4" data-max="2">
+        <div class="question-text">I eat non-organic produce regularly or rely heavily on processed/packaged foods</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s2_q5" data-max="2">
+        <div class="question-text">I am exposed to pesticides, chemicals, or heavy metals in my home or work environment</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s2_q6" data-max="2">
+        <div class="question-text">I use non-stick cookware or heat food in plastic containers</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s2_q7" data-max="2">
+        <div class="question-text">I have limited access to fresh air, green space, or natural light</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="section-total">Section score: <span id="s2-total">0</span> / 14</div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section-block" data-section="s3">
+      <div class="section-header">
+        <div class="section-num">Section 3</div>
+        <h3>Movement</h3>
+        <p>Movement is medicine, but so is rest. This section is about noticing how your body relates to physical activity: whether it feels nourishing or depleting, accessible or out of reach.</p>
+      </div>
+      <div class="question-row" data-q="s3_q1" data-max="2">
+        <div class="question-text">I sit or am sedentary for most of my day</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s3_q2" data-max="2">
+        <div class="question-text">I feel exhausted after physical activity rather than energized</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s3_q3" data-max="2">
+        <div class="question-text">I engage in high-intensity exercise frequently without adequate recovery time</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s3_q4" data-max="2">
+        <div class="question-text">I don't have consistent movement that I enjoy</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s3_q5" data-max="2">
+        <div class="question-text">My body feels stiff, achy, or disconnected from physical sensation</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s3_q6" data-max="2">
+        <div class="question-text">Movement feels like a punishment or obligation rather than something supportive</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="section-total">Section score: <span id="s3-total">0</span> / 12</div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="section-block" data-section="s4">
+      <div class="section-header">
+        <div class="section-num">Section 4</div>
+        <h3>Spiritual + Emotional Health</h3>
+        <p>Your nervous system holds your history. Chronic stress, unprocessed grief, trauma, and disconnection from meaning all shape your hormonal environment. There are no right or wrong answers here.</p>
+      </div>
+      <div class="question-row" data-q="s4_q1" data-max="2">
+        <div class="question-text">I feel chronically stressed, overwhelmed, or like I can't keep up</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s4_q2" data-max="2">
+        <div class="question-text">I carry unresolved grief, loss, or experiences I haven't had space to process</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s4_q3" data-max="2">
+        <div class="question-text">I feel disconnected from my body or a sense of purpose</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s4_q4" data-max="2">
+        <div class="question-text">I experience anxiety, persistent worry, or a sense of dread regularly</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s4_q5" data-max="2">
+        <div class="question-text">I feel isolated or lacking in community and meaningful connection</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s4_q6" data-max="2">
+        <div class="question-text">I use food, alcohol, or other substances to manage my emotions</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s4_q7" data-max="2">
+        <div class="question-text">I have a history of trauma, including medical or reproductive trauma, that still affects me</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s4_q8" data-max="2">
+        <div class="question-text">I feel like my fertility journey has taken a toll on my mental and emotional wellbeing</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="section-total">Section score: <span id="s4-total">0</span> / 16</div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="section-block" data-section="s5">
+      <div class="section-header">
+        <div class="section-num">Section 5</div>
+        <h3>Pleasure + Rest</h3>
+        <p>Rest is not a reward for productivity; it is a biological necessity. And pleasure is not indulgent; it is regulatory. This section looks at how well your nervous system gets to experience safety, softness, and restoration.</p>
+      </div>
+      <div class="question-row" data-q="s5_q1" data-max="2">
+        <div class="question-text">I have difficulty falling asleep, staying asleep, or waking feeling rested</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s5_q2" data-max="2">
+        <div class="question-text">I feel guilty or restless when I rest or do nothing</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s5_q3" data-max="2">
+        <div class="question-text">I rarely experience genuine pleasure, delight, or joy in my daily life</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s5_q4" data-max="2">
+        <div class="question-text">My libido feels low or absent</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s5_q5" data-max="2">
+        <div class="question-text">I feel "on" most of the time, like I rarely get to fully decompress</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s5_q6" data-max="2">
+        <div class="question-text">I don't have consistent practices that bring me comfort or ease</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="s5_q7" data-max="2">
+        <div class="question-text">I sleep fewer than 7 hours most nights</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="section-total">Section score: <span id="s5-total">0</span> / 14</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-header">
+      <div class="part-label">Part 2</div>
+      <h2>Body Systems</h2>
+      <p>Which upstream systems are asking for your attention?</p>
+    </div>
+
+    <!-- Identity context (unscored) -->
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-num">Before you begin: unscored</div>
+        <h3>Your context + identity</h3>
+        <p>This section is not scored. It is an orientation: a chance to name your context so that the program can meet you where you actually are. There are no wrong answers and nothing to optimize.</p>
+      </div>
+      <div class="identity-note">This information stays with you. It is not shared, analyzed, or scored. It is simply an invitation to arrive in this program as your full self.</div>
+
+      <div class="checkbox-group">
+        <div class="section-header" style="background:white; border:none; padding: 0.75rem 0 0.5rem;">
+          <div class="section-num">Your family-building pathway</div>
+        </div>
+        <label class="checkbox-label"><input type="checkbox"> I am trying to conceive naturally with a partner</label>
+        <label class="checkbox-label"><input type="checkbox"> I am trying to conceive using donor sperm</label>
+        <label class="checkbox-label"><input type="checkbox"> I am trying to conceive using donor eggs or embryos</label>
+        <label class="checkbox-label"><input type="checkbox"> I am pursuing or planning IUI or IVF</label>
+        <label class="checkbox-label"><input type="checkbox"> I am exploring surrogacy or gestational carrying</label>
+        <label class="checkbox-label"><input type="checkbox"> I am a solo parent by choice or part of a non-traditional family structure</label>
+        <label class="checkbox-label"><input type="checkbox"> I am in the early stages of exploring my options</label>
+        <label class="checkbox-label"><input type="checkbox"> I am not actively trying to conceive. I am here to understand my body and health</label>
+        <label class="checkbox-label"><input type="checkbox"> My pathway is different from the options above, and that's okay</label>
+
+        <div class="section-header" style="background:white; border:none; padding: 1.25rem 0 0.5rem; margin-top: 0.5rem;">
+          <div class="section-num">Your identity + body context</div>
+        </div>
+        <label class="checkbox-label"><input type="checkbox"> I identify as transgender, non-binary, genderqueer, or gender-expansive</label>
+        <label class="checkbox-label"><input type="checkbox"> I am currently on or have a history of gender-affirming hormone therapy</label>
+        <label class="checkbox-label"><input type="checkbox"> I have had gender-affirming surgery that may be relevant to my reproductive health</label>
+        <label class="checkbox-label"><input type="checkbox"> I identify as queer, lesbian, gay, bisexual, or another LGBTQIA+ identity</label>
+        <label class="checkbox-label"><input type="checkbox"> I am navigating this journey as a solo parent by choice, without a partner</label>
+        <label class="checkbox-label"><input type="checkbox"> I have a disability, chronic illness, or access need that shapes my healthcare experience</label>
+        <label class="checkbox-label"><input type="checkbox"> I have experienced medical trauma, dismissal, or discrimination in healthcare settings</label>
+        <label class="checkbox-label"><input type="checkbox"> My cultural, spiritual, or community background significantly shapes my relationship with health and healing</label>
+        <label class="checkbox-label"><input type="checkbox"> I have limited access to healthcare, insurance, or fertility-related services</label>
+        <label class="checkbox-label"><input type="checkbox"> I am a person of color navigating a healthcare system that has historically failed people who look like me</label>
+      </div>
+
+      <div class="open-field">
+        <label>Anything else you'd like to name?</label>
+        <textarea placeholder="Use this space to note anything about your body, your history, your access needs, or your experience that feels important as you begin this program. This is for you."></textarea>
+      </div>
+    </div>
+
+    <!-- Section P2-1: Reproductive + Hormonal -->
+    <div class="section-block" data-section="p2s1">
+      <div class="section-header">
+        <div class="section-num">Section 1</div>
+        <h3>Reproductive + Hormonal Health</h3>
+        <p>This section invites you to reflect on your reproductive experience as a whole: your cycle patterns, your pain, your history, and what your body has been telling you. Skip any questions that don't apply to your body or experience.</p>
+      </div>
+
+      <div class="question-row" style="background: var(--cream-dark); padding: 0.75rem 1.5rem;">
+        <div class="question-text" style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color: var(--text-light);">Cycle patterns</div>
+      </div>
+      <div class="question-row" data-q="p2s1_q1" data-max="2">
+        <div class="question-text">My menstrual cycles are irregular, unpredictable, or frequently absent</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q2" data-max="2">
+        <div class="question-text">My cycles are consistently very short (less than 21 days) or very long (more than 35 days)</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q3" data-max="2">
+        <div class="question-text">I experience spotting before my period begins or at mid-cycle</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q4" data-max="2">
+        <div class="question-text">My period is very light, lasting fewer than 2 days or producing very little flow</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q5" data-max="2">
+        <div class="question-text">My period is very heavy, soaking through a pad or tampon in an hour or less, or passing large clots</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q6" data-max="2">
+        <div class="question-text">I suspect my luteal phase (time between ovulation and period) is short, 10 days or fewer</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+
+      <div class="question-row" style="background: var(--cream-dark); padding: 0.75rem 1.5rem;">
+        <div class="question-text" style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color: var(--text-light);">Pain + physical experience</div>
+      </div>
+      <div class="question-row" data-q="p2s1_q7" data-max="2">
+        <div class="question-text">I experience significant pain or cramping with my period that disrupts my daily life</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q8" data-max="2">
+        <div class="question-text">I experience pelvic pain, pressure, or heaviness outside of my period</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q9" data-max="2">
+        <div class="question-text">I experience pain, discomfort, or bleeding during or after sexual activity</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q10" data-max="2">
+        <div class="question-text">I experience pain with bowel movements or urination, especially around my period</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q11" data-max="2">
+        <div class="question-text">I feel pelvic floor tension, tightness, pain with penetration, or other pelvic floor symptoms that feel persistent or disruptive</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q12" data-max="2">
+        <div class="question-text">My pain has worsened over time or is not well-controlled by typical measures</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+
+      <div class="question-row" style="background: var(--cream-dark); padding: 0.75rem 1.5rem;">
+        <div class="question-text" style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color: var(--text-light);">Diagnoses + conditions</div>
+      </div>
+      <div class="question-row" data-q="p2s1_q13" data-max="2">
+        <div class="question-text">I have been diagnosed with or suspect PCOS (polycystic ovary syndrome)</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q14" data-max="2">
+        <div class="question-text">I have been diagnosed with or suspect endometriosis</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q15" data-max="2">
+        <div class="question-text">I have been diagnosed with or suspect uterine fibroids</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q16" data-max="2">
+        <div class="question-text">I have been diagnosed with or suspect adenomyosis</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q17" data-max="2">
+        <div class="question-text">I have been told I have hormonal imbalances, including estrogen dominance, low progesterone, or elevated androgens</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+
+      <div class="question-row" style="background: var(--cream-dark); padding: 0.75rem 1.5rem;">
+        <div class="question-text" style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color: var(--text-light);">Reproductive history: unscored, for your reflection only</div>
+      </div>
+      <div class="question-row" data-q="p2s1_q18" data-unscored="true">
+        <div class="question-text">I have a history of pregnancy loss, including miscarriage, ectopic pregnancy, or termination</div>
+        <div class="question-note">You do not need to share the details. Simply noticing whether this is part of your history is enough.</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q19" data-unscored="true">
+        <div class="question-text">I have a history of pelvic inflammatory disease (PID), STIs, or reproductive tract infections</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q20" data-unscored="true">
+        <div class="question-text">I have been on hormonal birth control and noticed changes in my cycle, mood, or fertility awareness coming off it</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q21" data-unscored="true">
+        <div class="question-text">I have been trying to conceive or build my family for 6 months or more without success</div>
+        <div class="question-note">This includes natural conception, IUI, IVF, donor pathways, surrogacy, and any other family-building route.</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s1_q22" data-unscored="true">
+        <div class="question-text">I have undergone or am considering fertility treatments (IUI, IVF, or other assisted reproduction)</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="section-total">Section score: <span id="p2s1-total">0</span> / 34 <small style="font-size:11px; color: var(--text-light);">(reproductive history questions unscored)</small></div>
+    </div>
+
+    <!-- Section P2-2: Thyroid -->
+    <div class="section-block" data-section="p2s2">
+      <div class="section-header">
+        <div class="section-num">Section 2</div>
+        <h3>Thyroid Health</h3>
+        <p>Your thyroid sets the metabolic tempo for nearly every system in your body, including your cycle, ovulation, and hormonal rhythm. Subclinical thyroid dysfunction is one of the most underdiagnosed contributors to cycle irregularity and early pregnancy loss.</p>
+      </div>
+      <div class="question-row" data-q="p2s2_q1" data-max="2"><div class="question-text">I feel persistently tired, even with enough sleep</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q2" data-max="2"><div class="question-text">I feel cold when others around me are comfortable, or I have difficulty regulating my body temperature</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q3" data-max="2"><div class="question-text">My hair has been thinning, falling out, or feels brittle</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q4" data-max="2"><div class="question-text">I experience constipation or very slow digestion</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q5" data-max="2"><div class="question-text">My menstrual cycles are irregular, very light, or have become longer or shorter between periods</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q6" data-max="2"><div class="question-text">I have been told or have discovered that I am not ovulating regularly</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q7" data-max="2"><div class="question-text">I feel mentally foggy, slow to think, or have difficulty concentrating</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q8" data-max="2"><div class="question-text">I have been told my thyroid levels are "normal" but I still feel off</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s2_q9" data-max="2"><div class="question-text">My skin feels dry or puffy, especially around my face or eyes</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="section-total">Section score: <span id="p2s2-total">0</span> / 18</div>
+    </div>
+
+    <!-- Section P2-3: Adrenal -->
+    <div class="section-block" data-section="p2s3">
+      <div class="section-header">
+        <div class="section-num">Section 3</div>
+        <h3>Adrenal + Stress Response</h3>
+        <p>Your adrenal glands govern your stress response, and chronic stress is one of the most powerful disruptors of reproductive hormones. When your body is in sustained survival mode, reproduction moves down the priority list.</p>
+      </div>
+      <div class="question-row" data-q="p2s3_q1" data-max="2"><div class="question-text">I feel wired but tired, exhausted but unable to fully rest or switch off</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q2" data-max="2"><div class="question-text">I get a second wind late at night and feel most alert after 9pm</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q3" data-max="2"><div class="question-text">I feel anxious, reactive, or on edge without a clear reason</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q4" data-max="2"><div class="question-text">I rely on caffeine to function, especially in the morning</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q5" data-max="2"><div class="question-text">I crash in the early afternoon and feel a significant dip in energy</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q6" data-max="2"><div class="question-text">I feel overwhelmed by tasks that didn't used to bother me</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q7" data-max="2"><div class="question-text">I have difficulty recovering from stress; it lingers longer than it should</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q8" data-max="2"><div class="question-text">I experience heart palpitations, dizziness when standing, or feel lightheaded often</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s3_q9" data-max="2"><div class="question-text">I experience frequent headaches or persistent brain fog</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="section-total">Section score: <span id="p2s3-total">0</span> / 18</div>
+    </div>
+
+    <!-- Section P2-4: Cardiometabolic -->
+    <div class="section-block" data-section="p2s4">
+      <div class="section-header">
+        <div class="section-num">Section 4</div>
+        <h3>Cardiometabolic Function</h3>
+        <p>Cardiometabolic function is how your body manages energy, blood sugar, fats, and metabolic balance. At Joria, we align with a Health at Every Size (HAES)-informed approach. These questions are not about judging your body; they are an invitation to notice patterns within your own body over time.</p>
+      </div>
+      <div class="question-row" data-q="p2s4_q1" data-max="2"><div class="question-text">I feel shaky, irritable ("hangry"), or lightheaded if I go too long without eating</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s4_q2" data-max="2"><div class="question-text">I experience energy crashes or a significant dip in the afternoon</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s4_q3" data-max="2"><div class="question-text">I get intense cravings for sugar or refined carbohydrates, or feel better after eating them</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s4_q4" data-max="2"><div class="question-text">I feel hungry or unsatisfied shortly after eating a full meal</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s4_q5" data-max="2">
+        <div class="question-text">I gain weight easily, especially around my midsection, or notice my body composition shifting in ways that feel new</div>
+        <div class="question-note">Bodies change across the lifespan. This question is about noticing changes in your own body, not comparing yourself to external standards.</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s4_q6" data-max="2">
+        <div class="question-text">I've noticed new or changing darker, thicker, or velvety skin patches (especially on the neck, underarms, or groin area)</div>
+        <div class="question-note">Some pigmentation is normal, especially for people with more melanated skin. This refers to changes that feel new or textured for you.</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s4_q7" data-max="2"><div class="question-text">I've noticed increased facial or body hair growth, or acne along my jawline or chin</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s4_q8" data-max="2"><div class="question-text">I've been told I have elevated cholesterol, blood sugar, or blood pressure</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="section-total">Section score: <span id="p2s4-total">0</span> / 16</div>
+    </div>
+
+    <!-- Section P2-5: Immune -->
+    <div class="section-block" data-section="p2s5">
+      <div class="section-header">
+        <div class="section-num">Section 5</div>
+        <h3>Immune Health</h3>
+        <p>Your immune system plays a quiet but critical role in fertility; it must learn to recognize and protect a developing embryo. When the immune system is dysregulated, it can interfere with implantation and early pregnancy in ways that are rarely discussed.</p>
+      </div>
+      <div class="question-row" data-q="p2s5_q1" data-max="2"><div class="question-text">I get sick frequently or feel like I'm always fighting something off</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q2" data-max="2"><div class="question-text">I have a known autoimmune condition or have been told I may have one</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q3" data-max="2"><div class="question-text">I experience chronic inflammation: joint pain, swelling, or inflammatory flares</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q4" data-max="2"><div class="question-text">I feel puffy, inflamed, or swollen in ways that feel systemic rather than local</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q5" data-max="2"><div class="question-text">I have recurrent infections (yeast, bacterial vaginosis, UTIs, sinus infections)</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q6" data-max="2"><div class="question-text">I have experienced recurrent pregnancy loss or implantation failure</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q7" data-max="2"><div class="question-text">My allergies or sensitivities have increased over time</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q8" data-max="2"><div class="question-text">I feel like my immune system is either overreactive or underreactive</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s5_q9" data-max="2"><div class="question-text">I have a history of chronic illness that involved an immune component</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="section-total">Section score: <span id="p2s5-total">0</span> / 18</div>
+    </div>
+
+    <!-- Section P2-6: Gut systemic -->
+    <div class="section-block" data-section="p2s6">
+      <div class="section-header">
+        <div class="section-num">Section 6</div>
+        <h3>Gut Health as a Systemic Signal</h3>
+        <p>This section looks at your gut's role as an upstream systemic regulator; how it influences inflammation, immune function, hormone metabolism, and even the vaginal microbiome environment that supports fertility.</p>
+      </div>
+      <div class="question-row" data-q="p2s6_q1" data-max="2"><div class="question-text">I have or suspect a history of intestinal permeability ("leaky gut") or gut dysbiosis</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s6_q2" data-max="2"><div class="question-text">I have a history of antibiotic use that was frequent or extended</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s6_q3" data-max="2">
+        <div class="question-text">My bowel patterns are consistently irregular: chronic constipation, loose stools, or alternating between both</div>
+        <div class="question-note">Constipation can impair estrogen clearance, allowing estrogen to recirculate. Loose stools may signal inflammation or dysbiosis. Both affect the hormonal environment.</div>
+        <div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div>
+      </div>
+      <div class="question-row" data-q="p2s6_q4" data-max="2"><div class="question-text">I experience recurrent yeast infections or bacterial vaginosis</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s6_q5" data-max="2"><div class="question-text">I have been diagnosed with IBS, IBD, Crohn's, or another gut-related condition</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s6_q6" data-max="2"><div class="question-text">I notice that my gut symptoms get worse at certain points in my cycle</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s6_q7" data-max="2"><div class="question-text">I have chronic skin conditions like eczema, psoriasis, or acne that may have a gut connection</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="question-row" data-q="p2s6_q8" data-max="2"><div class="question-text">I experience significant brain fog, mood shifts, or anxiety that I suspect may be gut-related</div><div class="score-options"><button class="score-btn" data-val="0">0</button><button class="score-btn" data-val="1">1</button><button class="score-btn" data-val="2">2</button></div></div>
+      <div class="section-total">Section score: <span id="p2s6-total">0</span> / 16</div>
+    </div>
+
+    <div class="submit-area">
+      <button class="submit-btn" id="submit-btn" onclick="showResults()">See my results</button>
+      <div class="submit-note">Your responses stay in your browser only; nothing is collected or stored.</div>
+    </div>
+
+  </div><!-- end #quiz -->
+
+  <!-- RESULTS SECTION -->
+  <div id="results">
+
+    <div class="logo-bar">
+      <h1>Joria Integrative Healing</h1>
+      <p>Your personalized starting point</p>
+    </div>
+
+    <div class="results-header">
+      <h2>Your assessment results</h2>
+      <p>These results are an invitation to notice, not a verdict. Start where it feels most alive or most urgent.</p>
+    </div>
+
+    <div class="results-part">
+      <h3>Part 1: Healing Foundations</h3>      <div id="p1-bars"></div>
+    </div>
+
+    <div class="results-part">
+      <h3>Part 1: Where to begin in Healing Foundations</h3>
+      <div id="p1-routing"></div>
+    </div>
+
+    <div class="results-part" style="margin-top: 2rem;">
+      <h3>Part 2: Body Systems — your loudest signals</h3>
+      <div id="p2-bars"></div>
+    </div>
+
+    <div class="results-part">
+      <h3>Part 2: Where to focus in The Flow</h3>
+      <div id="p2-routing"></div>
+    </div>
+
+    <div class="closing-note">
+      <p>Your body is not broken. It is communicating.</p>
+      <p>The patterns you noticed in this assessment are not a verdict — they are a starting point. Healing is not linear. You may return to this assessment again as you move through the program and find that things have shifted. That is a sign that the work is working.</p>
+      <p>Start where you are. Not where you think you should be.</p>
+    </div>
+
+    <div class="footer-note">This assessment is for educational purposes only and is not a substitute for care from a licensed healthcare provider.</div>
+
+    <div class="submit-area">
+      <button class="restart-btn" onclick="restartQuiz()">Retake assessment</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const scores = {};
+
+const sectionMeta = {
+  s1: { label: 'Nutrition + Gut Health', max: 18, totalId: 's1-total' },
+  s2: { label: 'Environmental Impacts', max: 14, totalId: 's2-total' },
+  s3: { label: 'Movement', max: 12, totalId: 's3-total' },
+  s4: { label: 'Spiritual + Emotional', max: 16, totalId: 's4-total' },
+  s5: { label: 'Pleasure + Rest', max: 14, totalId: 's5-total' },
+  p2s1: { label: 'Reproductive + Hormonal', max: 34, totalId: 'p2s1-total' },
+  p2s2: { label: 'Thyroid Health', max: 18, totalId: 'p2s2-total' },
+  p2s3: { label: 'Adrenal + Stress Response', max: 18, totalId: 'p2s3-total' },
+  p2s4: { label: 'Cardiometabolic Function', max: 16, totalId: 'p2s4-total' },
+  p2s5: { label: 'Immune Health', max: 18, totalId: 'p2s5-total' },
+  p2s6: { label: 'Gut Health (systemic)', max: 16, totalId: 'p2s6-total' },
+};
+
+const p1Routing = {
+  s1: { label: 'Nutrition + Gut Health', text: 'Start in the Nutrition + Gut Health module. Your body may be asking for more consistent, nourishing fuel and better digestive support.' },
+  s2: { label: 'Environmental Impacts', text: 'Start in the Environmental Impacts module. Reducing your body\'s toxic burden may be a powerful first step.' },
+  s3: { label: 'Movement', text: 'Start in the Movement module. Explore what it means to move in a way that restores rather than depletes.' },
+  s4: { label: 'Spiritual + Emotional', text: 'Start in the Spiritual + Emotional module. Your nervous system may need support before anything else can land.' },
+  s5: { label: 'Pleasure + Rest', text: 'Start in the Pleasure + Rest module. Your body may be in a chronic state of depletion — restoration is medicine.' },
+};
+
+const p2Routing = {
+  p2s1: { label: 'Reproductive + Hormonal', text: 'Pay closest attention to the condition modules most relevant to your experience — PCOS, Endometriosis, Fibroids, and/or the Hormones module in The Flow. Your reproductive history is your roadmap.' },
+  p2s2: { label: 'Thyroid Health', text: 'Prioritize the Thyroid + Adrenal module in The Flow. Pay close attention to how thyroid function connects to your cycle, ovulation, and overall hormonal rhythm.' },
+  p2s3: { label: 'Adrenal + Stress', text: 'Prioritize the Thyroid + Adrenal module in The Flow. Your stress response system is likely impacting your reproductive hormone axis more than you may realize.' },
+  p2s4: { label: 'Cardiometabolic', text: 'Prioritize the Cardiometabolic module in The Flow. Blood sugar, insulin, and metabolic balance are foundational to hormonal health and fertility.' },
+  p2s5: { label: 'Immune Health', text: 'Prioritize the Immune Health + Implantation module in The Flow. Immune regulation is a key and often overlooked factor in conception and early pregnancy.' },
+  p2s6: { label: 'Gut Health (systemic)', text: 'Prioritize the Gut + Microbiome module in The Flow. Your gut\'s systemic influence on inflammation, hormones, and vaginal ecology is worth understanding deeply. You may also refer back to the Nutrition module in Healing Foundations.' },
+};
+
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.score-btn');
+  if (!btn) return;
+  const row = btn.closest('.question-row');
+  if (!row) return;
+  const qKey = row.dataset.q;
+  if (!qKey) return;
+  const val = parseInt(btn.dataset.val);
+  const unscored = row.dataset.unscored === 'true';
+
+  scores[qKey] = { val, unscored };
+
+  row.querySelectorAll('.score-btn').forEach(b => {
+    b.className = 'score-btn';
+    if (parseInt(b.dataset.val) === val) {
+      b.classList.add('selected-' + val);
+    }
+  });
+
+  const section = row.closest('[data-section]');
+  if (section) {
+    const secId = section.dataset.section;
+    updateSectionTotal(secId, section);
+  }
+});
+
+function updateSectionTotal(secId, sectionEl) {
+  const rows = sectionEl.querySelectorAll('[data-q]');
+  let total = 0;
+  rows.forEach(row => {
+    const key = row.dataset.q;
+    const unscored = row.dataset.unscored === 'true';
+    if (!unscored && scores[key]) {
+      total += scores[key].val;
+    }
+  });
+  const totalEl = document.getElementById(sectionMeta[secId].totalId);
+  if (totalEl) totalEl.textContent = total;
+}
+
+function getSectionScore(secId) {
+  const prefix = secId + '_';
+  let total = 0;
+  for (const [key, entry] of Object.entries(scores)) {
+    if (key.startsWith(prefix) && !entry.unscored) {
+      total += entry.val;
+    }
+  }
+  return total;
+}
+
+function showResults() {
+  const p1Sections = ['s1','s2','s3','s4','s5'];
+  const p2Sections = ['p2s1','p2s2','p2s3','p2s4','p2s5','p2s6'];
+
+  const p1Scores = p1Sections.map(id => ({ id, score: getSectionScore(id), max: sectionMeta[id].max, label: sectionMeta[id].label }));
+  const p2Scores = p2Sections.map(id => ({ id, score: getSectionScore(id), max: sectionMeta[id].max, label: sectionMeta[id].label }));
+
+  const p1Max = Math.max(...p1Scores.map(s => s.score));
+  const p2Max = Math.max(...p2Scores.map(s => s.score));
+
+  document.getElementById('p1-bars').innerHTML = p1Scores.map(s => {
+    const pct = s.max > 0 ? Math.round((s.score / s.max) * 100) : 0;
+    const isTop = s.score === p1Max && s.score > 0;
+    const barClass = pct >= 60 ? 'high' : pct >= 30 ? 'mid' : 'low';
+    return '<div class="result-row"><div class="result-label">' + s.label + (isTop ? '<span class="loudest-badge">priority</span>' : '') + '</div><div class="result-bar-wrap"><div class="result-bar ' + barClass + '" style="width:' + pct + '%"></div></div><div class="result-score">' + s.score + ' / ' + s.max + '</div></div>';
+  }).join('');
+
+  document.getElementById('p2-bars').innerHTML = p2Scores.map(s => {
+    const pct = s.max > 0 ? Math.round((s.score / s.max) * 100) : 0;
+    const isTop = s.score === p2Max && s.score > 0;
+    const barClass = pct >= 60 ? 'high' : pct >= 30 ? 'mid' : 'low';
+    return '<div class="result-row"><div class="result-label">' + s.label + (isTop ? '<span class="loudest-badge">loudest</span>' : '') + '</div><div class="result-bar-wrap"><div class="result-bar ' + barClass + '" style="width:' + pct + '%"></div></div><div class="result-score">' + s.score + ' / ' + s.max + '</div></div>';
+  }).join('');
+
+  const p1Sorted = [...p1Scores].sort((a,b) => (b.score/b.max) - (a.score/a.max));
+  document.getElementById('p1-routing').innerHTML = p1Sorted.slice(0,2).map((s, i) => {
+    const isTop = i === 0;
+    return '<div class="routing-card ' + (isTop ? 'top' : '') + '"><div class="routing-card-header"><h4>' + p1Routing[s.id].label + '</h4><span style="font-size:12px; color: var(--text-light);">' + s.score + ' / ' + s.max + '</span></div><div class="routing-card-body">' + p1Routing[s.id].text + '</div></div>';
+  }).join('');
+
+  const p2Sorted = [...p2Scores].sort((a,b) => (b.score/b.max) - (a.score/a.max));
+  document.getElementById('p2-routing').innerHTML = p2Sorted.slice(0,2).map((s, i) => {
+    const isTop = i === 0;
+    return '<div class="routing-card ' + (isTop ? 'top' : '') + '"><div class="routing-card-header"><h4>' + p2Routing[s.id].label + '</h4><span style="font-size:12px; color: var(--text-light);">' + s.score + ' / ' + s.max + '</span></div><div class="routing-card-body">' + p2Routing[s.id].text + '</div></div>';
+  }).join('');
+
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function restartQuiz() {
+  for (const key in scores) delete scores[key];
+  document.querySelectorAll('.score-btn').forEach(b => b.className = 'score-btn');
+  Object.keys(sectionMeta).forEach(id => {
+    const el = document.getElementById(sectionMeta[id].totalId);
+    if (el) el.textContent = '0';
+  });
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('textarea').forEach(ta => ta.value = '');
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
