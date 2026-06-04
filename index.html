@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1126,4 +1127,179 @@
     </div>
 
     <div class="results-part">
-      <h3>Part 1: Healing Foundations</h3>
+      <h3>Part 1: Healing Foundations</h3>      <div id="p1-bars"></div>
+    </div>
+
+    <div class="results-part">
+      <h3>Part 1: Where to begin in Healing Foundations</h3>
+      <div id="p1-routing"></div>
+    </div>
+
+    <div class="results-part" style="margin-top: 2rem;">
+      <h3>Part 2: Body Systems — your loudest signals</h3>
+      <div id="p2-bars"></div>
+    </div>
+
+    <div class="results-part">
+      <h3>Part 2: Where to focus in The Flow</h3>
+      <div id="p2-routing"></div>
+    </div>
+
+    <div class="closing-note">
+      <p>Your body is not broken. It is communicating.</p>
+      <p>The patterns you noticed in this assessment are not a verdict — they are a starting point. Healing is not linear. You may return to this assessment again as you move through the program and find that things have shifted. That is a sign that the work is working.</p>
+      <p>Start where you are. Not where you think you should be.</p>
+    </div>
+
+    <div class="footer-note">This assessment is for educational purposes only and is not a substitute for care from a licensed healthcare provider.</div>
+
+    <div class="submit-area">
+      <button class="restart-btn" onclick="restartQuiz()">Retake assessment</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const scores = {};
+
+const sectionMeta = {
+  s1: { label: 'Nutrition + Gut Health', max: 18, totalId: 's1-total' },
+  s2: { label: 'Environmental Impacts', max: 14, totalId: 's2-total' },
+  s3: { label: 'Movement', max: 12, totalId: 's3-total' },
+  s4: { label: 'Spiritual + Emotional', max: 16, totalId: 's4-total' },
+  s5: { label: 'Pleasure + Rest', max: 14, totalId: 's5-total' },
+  p2s1: { label: 'Reproductive + Hormonal', max: 34, totalId: 'p2s1-total' },
+  p2s2: { label: 'Thyroid Health', max: 18, totalId: 'p2s2-total' },
+  p2s3: { label: 'Adrenal + Stress Response', max: 18, totalId: 'p2s3-total' },
+  p2s4: { label: 'Cardiometabolic Function', max: 16, totalId: 'p2s4-total' },
+  p2s5: { label: 'Immune Health', max: 18, totalId: 'p2s5-total' },
+  p2s6: { label: 'Gut Health (systemic)', max: 16, totalId: 'p2s6-total' },
+};
+
+const p1Routing = {
+  s1: { label: 'Nutrition + Gut Health', text: 'Start in the Nutrition + Gut Health module. Your body may be asking for more consistent, nourishing fuel and better digestive support.' },
+  s2: { label: 'Environmental Impacts', text: 'Start in the Environmental Impacts module. Reducing your body\'s toxic burden may be a powerful first step.' },
+  s3: { label: 'Movement', text: 'Start in the Movement module. Explore what it means to move in a way that restores rather than depletes.' },
+  s4: { label: 'Spiritual + Emotional', text: 'Start in the Spiritual + Emotional module. Your nervous system may need support before anything else can land.' },
+  s5: { label: 'Pleasure + Rest', text: 'Start in the Pleasure + Rest module. Your body may be in a chronic state of depletion — restoration is medicine.' },
+};
+
+const p2Routing = {
+  p2s1: { label: 'Reproductive + Hormonal', text: 'Pay closest attention to the condition modules most relevant to your experience — PCOS, Endometriosis, Fibroids, and/or the Hormones module in The Flow. Your reproductive history is your roadmap.' },
+  p2s2: { label: 'Thyroid Health', text: 'Prioritize the Thyroid + Adrenal module in The Flow. Pay close attention to how thyroid function connects to your cycle, ovulation, and overall hormonal rhythm.' },
+  p2s3: { label: 'Adrenal + Stress', text: 'Prioritize the Thyroid + Adrenal module in The Flow. Your stress response system is likely impacting your reproductive hormone axis more than you may realize.' },
+  p2s4: { label: 'Cardiometabolic', text: 'Prioritize the Cardiometabolic module in The Flow. Blood sugar, insulin, and metabolic balance are foundational to hormonal health and fertility.' },
+  p2s5: { label: 'Immune Health', text: 'Prioritize the Immune Health + Implantation module in The Flow. Immune regulation is a key and often overlooked factor in conception and early pregnancy.' },
+  p2s6: { label: 'Gut Health (systemic)', text: 'Prioritize the Gut + Microbiome module in The Flow. Your gut\'s systemic influence on inflammation, hormones, and vaginal ecology is worth understanding deeply. You may also refer back to the Nutrition module in Healing Foundations.' },
+};
+
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.score-btn');
+  if (!btn) return;
+  const row = btn.closest('.question-row');
+  if (!row) return;
+  const qKey = row.dataset.q;
+  if (!qKey) return;
+  const val = parseInt(btn.dataset.val);
+  const unscored = row.dataset.unscored === 'true';
+
+  scores[qKey] = { val, unscored };
+
+  row.querySelectorAll('.score-btn').forEach(b => {
+    b.className = 'score-btn';
+    if (parseInt(b.dataset.val) === val) {
+      b.classList.add('selected-' + val);
+    }
+  });
+
+  const section = row.closest('[data-section]');
+  if (section) {
+    const secId = section.dataset.section;
+    updateSectionTotal(secId, section);
+  }
+});
+
+function updateSectionTotal(secId, sectionEl) {
+  const rows = sectionEl.querySelectorAll('[data-q]');
+  let total = 0;
+  rows.forEach(row => {
+    const key = row.dataset.q;
+    const unscored = row.dataset.unscored === 'true';
+    if (!unscored && scores[key]) {
+      total += scores[key].val;
+    }
+  });
+  const totalEl = document.getElementById(sectionMeta[secId].totalId);
+  if (totalEl) totalEl.textContent = total;
+}
+
+function getSectionScore(secId) {
+  const prefix = secId + '_';
+  let total = 0;
+  for (const [key, entry] of Object.entries(scores)) {
+    if (key.startsWith(prefix) && !entry.unscored) {
+      total += entry.val;
+    }
+  }
+  return total;
+}
+
+function showResults() {
+  const p1Sections = ['s1','s2','s3','s4','s5'];
+  const p2Sections = ['p2s1','p2s2','p2s3','p2s4','p2s5','p2s6'];
+
+  const p1Scores = p1Sections.map(id => ({ id, score: getSectionScore(id), max: sectionMeta[id].max, label: sectionMeta[id].label }));
+  const p2Scores = p2Sections.map(id => ({ id, score: getSectionScore(id), max: sectionMeta[id].max, label: sectionMeta[id].label }));
+
+  const p1Max = Math.max(...p1Scores.map(s => s.score));
+  const p2Max = Math.max(...p2Scores.map(s => s.score));
+
+  document.getElementById('p1-bars').innerHTML = p1Scores.map(s => {
+    const pct = s.max > 0 ? Math.round((s.score / s.max) * 100) : 0;
+    const isTop = s.score === p1Max && s.score > 0;
+    const barClass = pct >= 60 ? 'high' : pct >= 30 ? 'mid' : 'low';
+    return '<div class="result-row"><div class="result-label">' + s.label + (isTop ? '<span class="loudest-badge">priority</span>' : '') + '</div><div class="result-bar-wrap"><div class="result-bar ' + barClass + '" style="width:' + pct + '%"></div></div><div class="result-score">' + s.score + ' / ' + s.max + '</div></div>';
+  }).join('');
+
+  document.getElementById('p2-bars').innerHTML = p2Scores.map(s => {
+    const pct = s.max > 0 ? Math.round((s.score / s.max) * 100) : 0;
+    const isTop = s.score === p2Max && s.score > 0;
+    const barClass = pct >= 60 ? 'high' : pct >= 30 ? 'mid' : 'low';
+    return '<div class="result-row"><div class="result-label">' + s.label + (isTop ? '<span class="loudest-badge">loudest</span>' : '') + '</div><div class="result-bar-wrap"><div class="result-bar ' + barClass + '" style="width:' + pct + '%"></div></div><div class="result-score">' + s.score + ' / ' + s.max + '</div></div>';
+  }).join('');
+
+  const p1Sorted = [...p1Scores].sort((a,b) => (b.score/b.max) - (a.score/a.max));
+  document.getElementById('p1-routing').innerHTML = p1Sorted.slice(0,2).map((s, i) => {
+    const isTop = i === 0;
+    return '<div class="routing-card ' + (isTop ? 'top' : '') + '"><div class="routing-card-header"><h4>' + p1Routing[s.id].label + '</h4><span style="font-size:12px; color: var(--text-light);">' + s.score + ' / ' + s.max + '</span></div><div class="routing-card-body">' + p1Routing[s.id].text + '</div></div>';
+  }).join('');
+
+  const p2Sorted = [...p2Scores].sort((a,b) => (b.score/b.max) - (a.score/a.max));
+  document.getElementById('p2-routing').innerHTML = p2Sorted.slice(0,2).map((s, i) => {
+    const isTop = i === 0;
+    return '<div class="routing-card ' + (isTop ? 'top' : '') + '"><div class="routing-card-header"><h4>' + p2Routing[s.id].label + '</h4><span style="font-size:12px; color: var(--text-light);">' + s.score + ' / ' + s.max + '</span></div><div class="routing-card-body">' + p2Routing[s.id].text + '</div></div>';
+  }).join('');
+
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function restartQuiz() {
+  for (const key in scores) delete scores[key];
+  document.querySelectorAll('.score-btn').forEach(b => b.className = 'score-btn');
+  Object.keys(sectionMeta).forEach(id => {
+    const el = document.getElementById(sectionMeta[id].totalId);
+    if (el) el.textContent = '0';
+  });
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('textarea').forEach(ta => ta.value = '');
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
